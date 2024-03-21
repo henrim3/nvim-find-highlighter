@@ -23,7 +23,6 @@ function M.highlight_in_line(char, backwards)
 
     -- highlight occurrences in line
     for i = start_col, end_col do
-        print(i)
         if line_text:sub(i + 1, i + 1) == char then
             vim.api.nvim_buf_set_extmark(0, namespace_id, line_number, i,
                 { end_row = line_number, end_col = i + 1, hl_group = 'Search' })
