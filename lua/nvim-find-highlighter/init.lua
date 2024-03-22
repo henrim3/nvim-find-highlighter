@@ -59,8 +59,8 @@ local function press_escape()
 end
 
 function M.setup()
-    vim.keymap.set('n', 'f', M.find_and_highlight_forwards, { noremap = true, silent = true });
-    vim.keymap.set('n', '<s-f>', M.find_and_highlight_backwards, { noremap = true, silent = true });
+    vim.keymap.set({ 'n', 'v' }, 'f', M.find_and_highlight_forwards, { noremap = true, silent = true });
+    vim.keymap.set({ 'n', 'v' }, '<s-f>', M.find_and_highlight_backwards, { noremap = true, silent = true });
     vim.keymap.set({ 'n', 'i', 'v' }, '<esc>',
         function()
             M.clear_highlight()
