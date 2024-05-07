@@ -5,6 +5,8 @@ local namespace_id = vim.api.nvim_create_namespace('FindHighlighterNamespace')
 local M = {}
 
 function M.highlight_in_line(char, backwards)
+    M.clear_highlight()
+
     -- get current line text
     local cursor_pos = vim.api.nvim_win_get_cursor(0)
     local col_number = cursor_pos[2]
@@ -54,19 +56,14 @@ function M.clear_highlight()
     vim.api.nvim_buf_clear_namespace(0, namespace_id, 0, -1)
 end
 
-local function press_escape()
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, true, true), 'n', false)
-end
-
 function M.setup()
     local find_modes = { 'n', 'v', 's', 'x' }
-    local escape_modes = { 'n', 'v', 's', 'x', 'i' }
     vim.keymap.set(find_modes, 'f', M.find_and_highlight_forwards, { noremap = true, silent = true });
     vim.keymap.set(find_modes, '<s-f>', M.find_and_highlight_backwards, { noremap = true, silent = true });
-    vim.keymap.set(escape_modes, '<esc>',
+    vim.keymap.set('n', '<leader>ch',
         function()
             M.clear_highlight()
-            press_escape()
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cmd>noh<cr>', true, true, true), 'n', false)
         end, { noremap = true, silent = true });
 end
 
